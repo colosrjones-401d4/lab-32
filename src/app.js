@@ -19,7 +19,7 @@ const App = (props) => {
     qSubscribe('work', setQueueMessage);
     socketSubscribe('incoming', setSocketMessage);
   }, []);
-  
+
   return (
     <>
       <pre>Form Values: {JSON.stringify(values)}</pre>
@@ -35,3 +35,4 @@ const App = (props) => {
 };
 
 export default App;
+
