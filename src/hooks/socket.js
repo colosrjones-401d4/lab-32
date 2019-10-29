@@ -10,7 +10,9 @@ export default function useSocket() {
 
   function subscribe(event, callback) {
     if (!socket) throw 'Could not subscribe';
+    socket.on(event, callback);
   }
+
   return [
     publish,
     subscribe,

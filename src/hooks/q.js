@@ -11,8 +11,5 @@ export default function useQ() {
     Q.publish(q, event, message);
   }
 
-  return [
-    publish,
-    subscribe,
-  ];
+  return [publish, subscribe];
 }

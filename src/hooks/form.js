@@ -4,7 +4,7 @@ export default function useForm(onSubmit) {
   const [values, setValues] = useState({});
 
   const handleChange = e => {
-    setValues({...values, [e.target.name]: e.target.values});
+    setValues({...values, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = (e) => {
@@ -16,9 +16,9 @@ export default function useForm(onSubmit) {
     }
   };
 
-  return {
+  return [
     values,
     handleChange,
     handleSubmit,
-  };
+  ];
 }
