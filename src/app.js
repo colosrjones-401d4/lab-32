@@ -1,27 +1,29 @@
 import React from 'react';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 
-import Wagon from './components/todo/wagon';
-import Todo from './components/todo/todo';
-import ItemList from '../src/components/item';
-import Header from '../src/components/header';
+// State Only
+import ToDo from './components/todo/todo.js';
 
-import './components/todo/todo';
+// API Connected (Live Data)
+import ToDoConnected from './components/todo/todo-connected.js';
 
-function App(props) {
-  return (
-    <section>
-       <Header /> 
-      <div>
-        <Todo />
-      </div>
-      <div>
-        <ItemList />
-      </div>
-      <div>
-        <Wagon />
-      </div>
-    </section>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <>
+      <BrowserRouter>
+          <nav>
+            <ul>
+              <li><Link to="/">Local ToDo</Link></li>
+              <li><Link to="/connected">Connected ToDo</Link></li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path="/connected" component={ToDoConnected} />
+            <Route component={ToDo} />
+          </Switch>
+          </BrowserRouter>
+      </>
+    );
+  }
 }
-
-export default App;

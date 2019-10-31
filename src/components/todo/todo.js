@@ -1,88 +1,74 @@
 import React from 'react';
+import { useState } from 'react';
+// import uuid from 'uuid/v4';
 
-import useForm from '../form';
+//Components
+import Header from '../header';
+import Form from '../form';
+import List from '../list';
+import Details from '../details';
 
-function Todo(props) {
-  const categories = ['Cowboys', 'Boots', 'Men'];
-  const [handleChange, handleSubmit] = useForm(saveFormDataToServer);
+//Styling
+import './todo.scss';
 
-  function saveFormDataToServer(formData) {
-    let json = JSON.stringify(formData);
-    fetch(process.env.REACT_APP_API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json,
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(console.error);
+export default function ToDo() {
+
+  let initialList = [];
+  let [todoList, setTodoList] = useState(initialList);
+
+  let initialShowDetails = false;
+  let [showDetails, setShowDetails] = useState(initialShowDetails);
+
+  let initialDetails = {};
+  let [details, setDetails] = useState(initialDetails);
+
+  let toggleComplete = id => {
+    setTodoList(
+      todoList.map(item =>
+        item._id === id ? {
+          ...item,
+          complete: !item.complete,
+        } : item
+      )
+    )
+  };
+
+  let toggleDetails = id => {
+    let toggledItem = todoList.find(item => item._id === id);
+    setDetails(toggledItem || {});
+    setShowDetails(!!toggledItem);
   }
 
+  let addItem = item => {
+    setTodoList( () => ([...todoList, item]));
+  };
+
+  let deleteItem = id => {
+    let newList = todoList.filter(item => item._id !== id);
+    setTodoList(newList);
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit}
-    >
-      <label>
-        <input
-          onChange={handleChange}
-          placeholder="What do you want to do"
-          name="text"
-          type="text"
+    <>
+      <Header 
+        todoList={todoList}
+      />
+      <section className="todo">
+        <Form 
+          addItem={addItem}
         />
-      </label>
-      <label>
-        <span>Category</span>
-        <select onChange={handleChange} name="product">
-          <option />
-          {categories.map((category, idx) => (
-            <option value={category} key={idx}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        <input
-          onChange={handleChange}
-          placeholder="Dte"
-          name="due"
-          type="date"
+        <List 
+          todoList={todoList}
+          toggleComplete={toggleComplete}
+          toggleDetails={toggleDetails}
+          deleteItem={deleteItem}
         />
-      </label>
-      <label>
-        <input
-          onChange={handleChange}
-          placeholder="Assignee"
-          name="assignee"
-          type="text"
-        />
-      </label>
-      <label>
-        <input type="range" name="difficulty" min="1" max="11" />
-      </label>
-      <label>
-        <input
-          onChange={handleChange}
-          name="complete"
-          type="radio"
-          value="true"
-        />
-        Yes
-      </label>
-      <label>
-        <input
-          onChange={handleChange}
-          name="complete"
-          type="radio"
-          value="false"
-        />
-        No
-      </label>
-      <button>Add to the list</button>
-    </form>
+      </section>
+      <Details
+        showDetails={showDetails}
+        details={details}
+        toggleDetails={toggleDetails}
+      />
+    </>
   );
 }
-
-export default Todo;

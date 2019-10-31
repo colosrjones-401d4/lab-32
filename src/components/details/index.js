@@ -1,6 +1,6 @@
 import React from 'react';
-import { When } from './if';
-import Modal from './modal';
+import { When } from '../if';
+import Modal from '../modal';
 
 export default function Details(props) {
   return (
