@@ -24,4 +24,4 @@ export const When = props => render(props.condition, props.children);
   Pay more $$ and we will make you an admin
 </Unless>
 */
-export const Unless = props => render(!props.condition, props.children);
+export const Unless = props => render(!props.condition, props.children)

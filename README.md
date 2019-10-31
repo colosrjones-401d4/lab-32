@@ -10,7 +10,6 @@ Lab 32: Custom Hooks: Sockets and Fetch
 ### Modules
 #### `app.js`
 #### `todo.js`
-#### `wagon.js`
 #### `index.js`
 
 ### Setup
